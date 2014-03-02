@@ -69,8 +69,7 @@
 1) Escape HTML entities (&, <, >, etc.)
 2) Translate newlines into spaces
 3) Remove any double spaces
-4) Remove any trailing whitespace
-"
+4) Remove any trailing whitespace"
   (let* ((text (url-insert-entities-in-string str))
 	 (text (replace-regexp-in-string "\n" " " text))
 	 (text (replace-regexp-in-string "[ ][ ]+" " " text))
