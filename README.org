@@ -8,9 +8,24 @@ exported.
 
 Built using Org mode's builtin [[http://orgmode.org/org.html#Exporting][export functionality]], the goal of this
 backend is to allow you to write structured documents in Org that can
-then easily be exported to OPML.
+easily be exported to OPML.
+
+** Features
+
+- Handles headlines, plain list items, and paragraphs
+- HTML entities (<, >, &, etc.) are safely escaped
+- Can set =<outline>= attributes via property drawers
+- Uses standard [[http://orgmode.org/org.html#Export-settings][export settings]] in the =<head>= element
+- Follows the OPML 2.0 [[http://dev.opml.org/spec2.html][specification]]
 
 ** Installation
 
 1) Copy =ox-opml.el= into =load-path=
 2) Evaluate =(load-library "ox-opml")=
+
+** Usage
+
+1) While visiting an Org file, press =\C-c \C-e= to open the [[http://orgmode.org/org.html#The-Export-Dispatcher][Export Dispatcher]]
+2) Press =o= to activate the OPML exporter
+3) The exported file will be created in the same directory as the Org
+   file with an ".opml" extension
