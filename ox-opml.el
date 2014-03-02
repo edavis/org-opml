@@ -42,7 +42,7 @@
     (org-export-to-file 'opml file async subtreep visible-only body-only)))
 
 (defun org-opml-headline (headline contents info)
-  (let ((text (url-insert-entities-in-string (car (org-element-property :title headline))))
+  (let ((text (clean-text (car (org-element-property :title headline))))
 	(type (org-element-property :TYPE headline))
 	(attributes (concat
 		     (when (org-element-property :NAME headline)
@@ -72,6 +72,7 @@
 4) Remove any trailing whitespace"
   (let* ((text (url-insert-entities-in-string str))
 	 (text (replace-regexp-in-string "\n" " " text))
+	 (text (replace-regexp-in-string "[']" "&apos;" text))
 	 (text (replace-regexp-in-string "[ ][ ]+" " " text))
 	 (text (replace-regexp-in-string " $" "" text)))
     text))
