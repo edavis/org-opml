@@ -66,19 +66,30 @@
 	   (format
 	    "<outline text=\"%s\" %s>%s</outline>" text attributes contents)))))
 
+(defun clean-text (str)
+  "Remove problematic elements from STR.
+
+1) Escape HTML entities (&, <, >, etc.)
+2) Translate newlines into spaces
+3) Remove any double spaces
+4) Remove any trailing whitespace
+"
+  (let* ((text (url-insert-entities-in-string str))
+	 (text (replace-regexp-in-string "\n" " " text))
+	 (text (replace-regexp-in-string "[ ][ ]+" " " text))
+	 (text (replace-regexp-in-string " $" "" text)))
+    text))
+
 (defun org-opml-paragraph (paragraph contents info)
   (let* ((parent (org-element-type (org-export-get-parent paragraph)))
-	(text (url-insert-entities-in-string contents))
-	(text (replace-regexp-in-string "\n" " " text))
-	(text (replace-regexp-in-string "[ ][ ]+" " " text))
-	(text (replace-regexp-in-string " $" "" text)))
+	 (text (clean-text contents)))
     ;; Only display paragraphs when not in a list item
     (unless (eq parent 'item)
       (format "<outline text=\"%s\"/>" text))))
 
 (defun org-opml-item (item contents info)
   (let* ((p (org-element-map item 'paragraph 'identity nil t))
-	 (text (url-insert-entities-in-string (car (org-element-contents p)))))
+	 (text (clean-text (car (org-element-contents p)))))
     (concat
      (format "<outline text=\"%s\">" text)
      contents
