@@ -1,4 +1,4 @@
-`ox-opml.el` export to OPML from Org mode.
+`ox-opml.el` exports to OPML from Org mode.
 
 For example, <a
 href="http://files.davising.com/2014/03/01/nba.org">here</a> is an Org
