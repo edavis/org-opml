@@ -51,20 +51,17 @@
 		       (format " created=\"%s\" " (org-element-property :CREATED headline)))))
 	(contents (if (string= contents "\n") "" (or contents ""))))
     (cond ((member type '("link" "include"))
-	   (format
-	    "<outline text=\"%s\" type=\"%s\" url=\"%s\" %s>%s</outline>"
-	    text type (org-element-property :URL headline) attributes contents))
+	   (format "<outline text=\"%s\" type=\"%s\" url=\"%s\" %s>%s</outline>"
+		   text type (org-element-property :URL headline) attributes contents))
 	  ((string= type "rss")
-	   (format
-	    "<outline text=\"%s\" type=\"rss\" xmlUrl=\"%s\" %s>%s</outline>"
-	    text (org-element-property :XMLURL headline) attributes contents))
+	   (format "<outline text=\"%s\" type=\"rss\" xmlUrl=\"%s\" %s>%s</outline>"
+		   text (org-element-property :XMLURL headline) attributes contents))
 	  (type
-	   (format
-	    "<outline text=\"%s\" type=\"%s\" %s>%s</outline>"
-	    text type attributes contents))
+	   (format "<outline text=\"%s\" type=\"%s\" %s>%s</outline>"
+		   text type attributes contents))
 	  (t
-	   (format
-	    "<outline text=\"%s\" %s>%s</outline>" text attributes contents)))))
+	   (format "<outline text=\"%s\" %s>%s</outline>"
+		   text attributes contents)))))
 
 (defun clean-text (str)
   "Remove problematic elements from STR.
