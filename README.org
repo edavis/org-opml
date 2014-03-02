@@ -1,0 +1,16 @@
+* org-opml
+
+=ox-opml.el= exports Org mode files to OPML.
+
+For example, [[http://files.davising.com/2014/03/01/nba.org][here]] is an Org file listing every NBA team, organized by
+conference and division and [[http://files.davising.com/2014/03/01/nba.opml][here]] is that same file after being
+exported.
+
+Built using Org mode's builtin [[http://orgmode.org/org.html#Exporting][export functionality]], the goal of this
+backend is to allow you to write structured documents in Org that can
+then easily be exported to OPML.
+
+** Installation
+
+1) Copy =ox-opml.el= into =load-path=
+2) Evaluate =(load-library "ox-opml")=
