@@ -86,10 +86,7 @@
 (defun org-opml-item (item contents info)
   (let* ((p (org-element-map item 'paragraph 'identity nil t))
 	 (text (clean-text (car (org-element-contents p)))))
-    (concat
-     (format "<outline text='%s'>" text)
-     contents
-     "</outline>")))
+    (format "<outline text='%s'>%s</outline>" text contents)))
 
 (defun org-opml-link (link contents info)
   (let ((url (org-element-property :raw-link link))
