@@ -42,7 +42,7 @@
     (org-export-to-file 'opml file async subtreep visible-only body-only)))
 
 (defun org-opml-headline (headline contents info)
-  (let ((text (clean-text (car (org-element-property :title headline))))
+  (let ((text (clean-text (org-element-property :raw-value headline)))
 	(type (org-element-property :TYPE headline))
 	(attributes (concat
 		     (when (org-element-property :NAME headline)
