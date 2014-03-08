@@ -25,7 +25,7 @@
 (org-export-define-backend 'opml
   '((headline . org-opml-headline)
     (section . (lambda (section contents info) contents))
-    (plain-list . (lambda (section contents info) contents))
+    (plain-list . (lambda (plain-list contents info) contents))
     (item . org-opml-item)
     (link . org-opml-link)
     (paragraph . org-opml-paragraph)
