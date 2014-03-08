@@ -41,27 +41,23 @@
   (let ((file (org-export-output-file-name ".opml" subtreep)))
     (org-export-to-file 'opml file async subtreep visible-only body-only)))
 
+(defun org-opml-build-attributes (headline)
+  "Build a key=value string from all property nodes for a given headline."
+  (let* ((pom (org-element-property :begin headline))
+	 (properties (org-entry-properties pom))
+	 (attributes (mapconcat (lambda (element)
+				  (let ((key (car element))
+					(value (cdr element))
+					(case-fold-search nil))
+				    (unless (string-match-p "\\`[A-Z]+\\'" key) ; skip all upcase keys
+				      (format "%s=\"%s\"" key (clean-text value))))) properties " ")))
+    attributes))
+
 (defun org-opml-headline (headline contents info)
   (let ((text (clean-text (org-element-property :raw-value headline)))
-	(type (org-element-property :TYPE headline))
-	(attributes (concat
-		     (when (org-element-property :NAME headline)
-		       (format " name='%s' " (org-element-property :NAME headline)))
-		     (when (org-element-property :CREATED headline)
-		       (format " created='%s' " (org-element-property :CREATED headline)))))
+	(attributes (org-opml-build-attributes headline))
 	(contents (if (string= contents "\n") "" (or contents ""))))
-    (cond ((member type '("link" "include"))
-	   (format "<outline text='%s' type='%s' url='%s' %s>%s</outline>"
-		   text type (org-element-property :URL headline) attributes contents))
-	  ((string= type "rss")
-	   (format "<outline text='%s' type='rss' xmlUrl='%s' %s>%s</outline>"
-		   text (org-element-property :XMLURL headline) attributes contents))
-	  (type
-	   (format "<outline text='%s' type='%s' %s>%s</outline>"
-		   text type attributes contents))
-	  (t
-	   (format "<outline text='%s' %s>%s</outline>"
-		   text attributes contents)))))
+    (format "<outline text='%s' %s>%s</outline>" text attributes contents)))
 
 (defun clean-text (str)
   "Remove problematic elements from STR.
