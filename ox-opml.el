@@ -88,7 +88,9 @@
 (defun org-opml-link (link contents info)
   (let ((url (org-element-property :raw-link link))
 	(text (car (org-element-contents link))))
-    (format "<a href='%s'>%s</a>" url text)))
+    (if text
+	(format "<a href='%s'>%s</a>" url text)
+      url)))
 
 (defun org-opml-add-header (key info &optional tag)
   (let ((tag (or tag (substring (symbol-name key) 1)))
