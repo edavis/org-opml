@@ -91,7 +91,7 @@
   (let ((url (org-element-property :raw-link link))
 	(text (car (org-element-contents link))))
     (if text
-	(format "<a href='%s'>%s</a>" url text)
+	(format "<a href=\"%s\">%s</a>" url text)
       url)))
 
 (defun org-opml-italic (italic contents info)
