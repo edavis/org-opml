@@ -5,8 +5,8 @@
 What this means is you can use the very powerful [[http://orgmode.org/][Org mode]] to author
 plain text outlines and then easily export those outlines to [[http://dev.opml.org/spec2.html][OPML]].
 
-For example, here is an [[http://files.davising.com/org-opml/nba.org][Org file listing every NBA team]]. Here is that
-[[http://files.davising.com/org-opml/nba.opml][same file exported to OPML]].
+For example, here is an [[http://files.davising.com/org-opml/nba.org][Org file listing every NBA team]] and that [[http://files.davising.com/org-opml/nba.opml][same
+file exported to OPML]].
 
 ** Features
 
