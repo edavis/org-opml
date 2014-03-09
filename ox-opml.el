@@ -28,6 +28,8 @@
     (plain-list . (lambda (plain-list contents info) contents))
     (item . org-opml-item)
     (link . org-opml-link)
+    (italic . org-opml-italic)
+    (bold . org-opml-bold)
     (paragraph . org-opml-paragraph)
     (template . org-opml-template))
   :options-alist '((:opml-link "OPML_LINK" nil nil t)
@@ -91,6 +93,12 @@
     (if text
 	(format "<a href='%s'>%s</a>" url text)
       url)))
+
+(defun org-opml-italic (italic contents info)
+  (format "<i>%s</i>" contents))
+
+(defun org-opml-bold (bold contents info)
+  (format "<b>%s</b>" contents))
 
 (defun org-opml-add-header (key info &optional tag)
   (let ((tag (or tag (substring (symbol-name key) 1)))
