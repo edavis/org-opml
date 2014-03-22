@@ -123,7 +123,9 @@
 	   (format-time-string "%a, %d %b %Y %H:%M:%S" (current-time) t))
    "<opml version='2.0'>"
    "<head>"
-   (org-opml-add-header :title info)
+   (if (equal (plist-get info :title) " *Format Temp 0*")
+       "<title>Untitled</title>"
+     (org-opml-add-header :title info))
    (org-opml-add-header :description info)
    (org-opml-add-header :author info "ownerName")
    (org-opml-add-header :email info "ownerEmail")
