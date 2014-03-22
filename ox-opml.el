@@ -59,7 +59,7 @@
   (let ((text (clean-text (org-element-property :raw-value headline)))
 	(attributes (org-opml-build-attributes headline))
 	(contents (if (string= contents "\n") "" (or contents ""))))
-    (format "<outline text='%s' %s>%s</outline>" text attributes contents)))
+    (format "<outline text='%s' structure=\"headline\" %s>%s</outline>" text attributes contents)))
 
 (defun clean-text (str)
   "Remove problematic elements from STR.
@@ -80,7 +80,7 @@
 	 (text (clean-text contents)))
     ;; Only display paragraphs when not in a list item
     (unless (eq parent 'item)
-      (format "<outline text='%s'/>" text))))
+      (format "<outline text='%s' structure=\"paragraph\"/>" text))))
 
 (defun org-opml-item (item contents info)
   (let* ((p (org-element-map item 'paragraph 'identity nil t))
