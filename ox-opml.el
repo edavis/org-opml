@@ -108,8 +108,8 @@
 
 (defun org-opml-add-timestamp-headers ()
   (let* ((fmt "%a, %d %b %Y %H:%M:%S")
-	 (attr (file-attributes (buffer-file-name)))
-	 (modified (nth 5 attr))
+	 (attr (if (buffer-file-name) (file-attributes (buffer-file-name)) nil))
+	 (modified (if attr (nth 5 attr) (current-time)))
 	 (creation (current-time)))
     (concat
      (format "<dateModified>%s GMT</dateModified>" (format-time-string fmt modified t))
