@@ -143,7 +143,8 @@
 (defun org-opml-final-function (contents backend info)
   (with-temp-buffer
     (insert contents)
-    (shell-command-on-region (point-min) (point-max) "xmllint --format -" nil t)
+    (when (executable-find "xmllint")
+      (shell-command-on-region (point-min) (point-max) "xmllint --format -" nil t))
     (buffer-substring-no-properties (point-min) (point-max))))
 
 (provide 'ox-opml)
