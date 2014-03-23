@@ -8,12 +8,12 @@ standardized XML file format for storing outlines.
 By default, Org mode files consist of plain text with light
 markup. OPML, on the other hand, is a complete XML dialect.
 
-Here's how it works:
+=org-opml= combines the two. Here's how it works:
 
 Once =org-opml= is installed and you open an OPML file, it converts
 the raw OPML to Org mode style text. Think stars for headlines, dashes
-for list items, that sort of thing. This text is then displayed in
-Emacs and you can edit it freely.
+for list items, etc. This text is then displayed in Emacs and you can
+edit it freely.
 
 When saving, the reverse happens. The displayed Org mode style text is
 converted to OPML and the result is written to disk.
