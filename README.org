@@ -1,12 +1,28 @@
 * org-opml
 
-=ox-opml.el= exports Org mode files to OPML.
+=org-opml= lets you edit OPML files using Org mode in Emacs.
 
-What this means is you can use the very powerful [[http://orgmode.org/][Org mode]] to author
-plain text outlines and then easily export those outlines to [[http://dev.opml.org/spec2.html][OPML]].
+Org mode is an Emacs extension for editing outlines. OPML is a
+standardized XML file format for storing outlines.
 
-For example, here is an [[http://files.davising.com/org-opml/nba.org][Org file listing every NBA team]] and that [[http://files.davising.com/org-opml/nba.opml][same
-file exported to OPML]].
+By default, Org mode files consist of plain text with light
+markup. OPML, on the other hand, is a complete XML dialect.
+
+Here's how it works:
+
+Once =org-opml= is installed and you open an OPML file, it converts
+the raw OPML to Org mode style text. Think stars for headlines, dashes
+for list items, that sort of thing. This text is then displayed in
+Emacs and you can edit it freely.
+
+When saving, the reverse happens. The displayed Org mode style text is
+converted to OPML and the result is written to disk.
+
+So, in Emacs, you see Org mode. But on disk, it's OPML.
+
+I find this to be the best of both worlds. You get all the power of
+Emacs/Org mode to edit your outlines while the resulting file can be
+parsed using standard XML/OPML libraries.
 
 ** Features
 
@@ -18,12 +34,62 @@ file exported to OPML]].
 
 ** Installation
 
-1) Copy =ox-opml.el= into =load-path=
-2) Evaluate =(load-library "ox-opml")=
+=org-opml= consists of two files and some configuration to hook
+everything together.
 
-** Usage
+- =ox-opml.el= converts Org mode style text to OPML. It defines an
+  OPML backend using Org mode's export dispatcher.
 
-1) While visiting an Org file, press =\C-c \C-e= to open the [[http://orgmode.org/org.html#The-Export-Dispatcher][Export Dispatcher]]
-2) Press =o= to activate the OPML exporter
-3) The exported file will be created in the same directory as the Org
-   file with an ".opml" extension
+- =opml2org.py= is a Python script that converts OPML to Org mode
+  style text.
+
+First, copy =ox-opml.el= into your =load-path=. Next, note where
+you've stored =opml2org.py=.
+
+Then, add the following to your =~/.emacs=:
+
+#+BEGIN_SRC emacs-lisp
+  ;; Activate org-mode when opening OPML files.
+  (add-to-list 'auto-mode-alist '("\\.opml$" . org-mode))
+  
+  ;; Define the format conversion going to and from Org mode/OPML.
+  ;;
+  ;; Change "~/src/org-opml/opml2org.py" to wherever opml2org.py is stored.
+  (add-to-list 'format-alist '(opml "Outline Processor Markup Language"
+                                    "<[?]xml version=\"1.0\"[?]>[\n]?.*[\n]?<opml version=\"2.0\">"
+                                    "~/src/org-opml/opml2org.py" opml-encode t))
+  
+  ;; Load the OPML export backend.
+  (load-library "ox-opml")
+  
+  ;; Tell Emacs that if it ends with .opml, treat as OPML.
+  ;;
+  ;; See the docstring for why this is needed. Then, add as a
+  ;; `find-file' hook.
+  (defun set-buffer-file-format-to-opml ()
+    "Set buffer-file-format to '(opml) when visiting an .opml file.
+  
+  The regexp in `format-alist' works when loading an already
+  existing OPML file that contains the magic marker.
+  
+  With this, if a blank file is created that ends with .opml it
+  will still be exported as OPML."
+    (when (string-match "\.opml$" (buffer-file-name))
+      (setq buffer-file-format '(opml))))
+  
+  (add-hook 'find-file-hooks 'set-buffer-file-format-to-opml)
+  
+  ;; The function called when converting from Org mode to OPML.
+  (defun opml-encode (begin end buffer)
+    "Export Org mode buffer to OPML, using the export backend."
+    (let ((org-export-show-temporary-export-buffer nil)
+          (name "*OPML Export Buffer*"))
+      (org-export-to-buffer 'opml name)
+      (erase-buffer)
+      (insert-buffer-substring (get-buffer name))
+      (point-max)))
+  
+#+END_SRC
+
+Once all this has been added to =~/.emacs=, type =M-x eval-buffer= to
+activate all of it.
