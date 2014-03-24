@@ -41,7 +41,7 @@ def process_body(element, headline_depth=1, list_depth=0):
             yield '%s\n' % text
 
 def extract_header(head, tag, export_tag=None):
-    if head.find(tag) is not None:
+    if head.find(tag) is not None and head.find(tag).text:
         return '#+%s: %s' % (export_tag or tag.upper(), head.find(tag).text)
 
 if __name__ == '__main__':
