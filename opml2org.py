@@ -52,9 +52,9 @@ if __name__ == '__main__':
     ])
     org_body = process_body(body)
 
-    sys.stdout.write(
+    sys.stdout.write((
         '\n'.join(org_head) +
         '\n\n' +
         '\n'.join(org_body) +
         '\n'
-    )
+    ).encode('utf-8', 'replace'))
