@@ -46,14 +46,14 @@ def extract_header(head, tag, export_tag=None):
 
 if __name__ == '__main__':
     head, body = ET.fromstring(sys.stdin.read())
-    org_head = filter(bool, [
+    org_head = [
         extract_header(head, 'title'),
         extract_header(head, 'description'),
-    ])
+    ]
     org_body = process_body(body)
 
     sys.stdout.write((
-        '\n'.join(org_head) +
+        '\n'.join(filter(bool, org_head)) +
         '\n\n' +
         '\n'.join(org_body) +
         '\n'
