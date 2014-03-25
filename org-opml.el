@@ -9,9 +9,9 @@
 (defun set-buffer-file-format-to-opml ()
   "Set buffer-file-format to '(opml) when visiting an .opml file.
 
-This is needed as otherwise newly created .opml files would know
-to pass their contents through `opml-encode' because they don't
-yet contain the `format-alist' regexp pattern."
+This is needed as otherwise newly created .opml files wouldn't
+know to pass their contents through `opml-encode' because they
+don't yet contain the `format-alist' regexp pattern."
   (when (string-match "\.opml$" (buffer-file-name))
     (setq buffer-file-format '(opml))))
 
