@@ -58,5 +58,5 @@ this, please let me know.
 - *org-opml.el* handles all the necessary configuration.
 
 Also, as =ox-opml.el= is built using Org mode's export dispatcher, you
-can also perform a one-way Org mode -> OPML export by typing =C-x C-e o=
-in an open Org mode file.
+can perform a one-way Org mode -> OPML export by typing =C-x C-e o= in
+an open Org mode file.
