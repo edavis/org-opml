@@ -8,16 +8,17 @@ Let's break that down:
 - [[http://orgmode.org/][Org mode]] is an Emacs extension for editing outlines (among other things).
 - [[http://www.gnu.org/software/emacs/][Emacs]] is a powerful text editor and programming environment.
 
-Org mode files consist of plain text with some light markup. OPML, on
-the other hand, is a complete XML dialect.
+=org-opml= came about as Org mode's [[http://orgmode.org/org.html#Document-Structure][outliner interface]] is just about
+perfect, except I was looking for a way to save my outlines as OPML
+rather than Org mode's default file format of plain text with light
+markup.
 
-=org-opml= is a bridge that seamlessly lets you convert your data
-between the two formats. Here's how:
+Here's how it works:
 
 Once =org-opml= is installed and you open an OPML file, it converts
-the raw OPML to Org mode style text. Think stars for headlines, dashes
-for list items, etc. This text is then displayed in Emacs and you can
-edit it freely.
+the OPML to Org mode style text. Think stars for headlines, dashes for
+list items, etc. This text is then displayed in Emacs and you can edit
+it freely using Org mode.
 
 When saving, the reverse happens. The displayed Org mode style text is
 converted to OPML and the result is written to disk.
