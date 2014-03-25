@@ -38,62 +38,25 @@ parsed using standard XML/OPML libraries.
 
 ** Installation
 
-=org-opml= consists of two files and some configuration to hook
-everything together.
+1) Copy =org-opml.el= and =ox-opml.el= into a directory in your =load-path=
+2) Update the path to =opml2org.py=, if necessary
+3) Then, in =~/.emacs= put =(load-library "org-opml")=
+4) Move your cursor after the last parenthesis and type =C-x
+   C-e=. Everything in =org-opml.el= will now be evaluated and you
+   should be ready to start using it.
 
-- =ox-opml.el= converts Org mode style text to OPML. It defines an
-  OPML backend using Org mode's export dispatcher.
+I have to think this can be simplified. If you know a better way to do
+this, please let me know.
 
-- =opml2org.py= is a Python script that converts OPML to Org mode
-  style text.
+** How it works
 
-First, copy =ox-opml.el= into your =load-path=. Next, note where
-you've stored =opml2org.py=.
+=org-opml= consists of three files:
 
-Then, add the following to your =~/.emacs=:
+- *ox-opml.el* converts Org mode to OPML. It defines an OPML backend
+  using Org mode's export dispatcher.
+- *opml2org.py* converts OPML to Org mode. It's a Python script.
+- *org-opml.el* handles all the necessary configuration.
 
-#+BEGIN_SRC emacs-lisp
-  ;; Activate org-mode when opening OPML files.
-  (add-to-list 'auto-mode-alist '("\\.opml$" . org-mode))
-  
-  ;; Define the format conversion going to and from Org mode/OPML.
-  ;;
-  ;; Change "~/src/org-opml/opml2org.py" to wherever opml2org.py is stored.
-  (add-to-list 'format-alist '(opml "Outline Processor Markup Language"
-                                    "<[?]xml version=\"1.0\"[?]>[\n]?.*[\n]?<opml version=\"2.0\">"
-                                    "~/src/org-opml/opml2org.py" opml-encode t))
-  
-  ;; Load the OPML export backend.
-  (load-library "ox-opml")
-  
-  ;; Tell Emacs that if it ends with .opml, treat as OPML.
-  ;;
-  ;; See the docstring for why this is needed. Then, add as a
-  ;; `find-file' hook.
-  (defun set-buffer-file-format-to-opml ()
-    "Set buffer-file-format to '(opml) when visiting an .opml file.
-  
-  The regexp in `format-alist' works when loading an already
-  existing OPML file that contains the magic marker.
-  
-  With this, if a blank file is created that ends with .opml it
-  will still be exported as OPML."
-    (when (string-match "\.opml$" (buffer-file-name))
-      (setq buffer-file-format '(opml))))
-  
-  (add-hook 'find-file-hooks 'set-buffer-file-format-to-opml)
-  
-  ;; The function called when converting from Org mode to OPML.
-  (defun opml-encode (begin end buffer)
-    "Export Org mode buffer to OPML, using the export backend."
-    (let ((org-export-show-temporary-export-buffer nil)
-          (name "*OPML Export Buffer*"))
-      (org-export-to-buffer 'opml name)
-      (erase-buffer)
-      (insert-buffer-substring (get-buffer name))
-      (point-max)))
-  
-#+END_SRC
-
-Once all this has been added to =~/.emacs=, type =M-x eval-buffer= to
-activate all of it.
+Also, as =ox-opml.el= is built using Org mode's export dispatcher, you
+can also perform a one-way Org mode -> OPML export by typing =C-x C-e o=
+in an open Org mode file.
