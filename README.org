@@ -4,9 +4,9 @@
 
 Let's break that down:
 
-- OPML is a standardized XML file format for storing outlines.
-- Org mode is an Emacs extension for editing outlines (among other things).
-- Emacs is a powerful text editor and programming environment.
+- [[http://dev.opml.org/spec2.html][OPML]] is a standardized XML file format for storing outlines.
+- [[http://orgmode.org/][Org mode]] is an Emacs extension for editing outlines (among other things).
+- [[http://www.gnu.org/software/emacs/][Emacs]] is a powerful text editor and programming environment.
 
 Org mode files consist of plain text with some light markup. OPML, on
 the other hand, is a complete XML dialect.
