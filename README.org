@@ -33,7 +33,7 @@ parsed using standard XML/OPML libraries.
 
 - Handles headlines, plain list items, and paragraphs
 - HTML entities (<, >, &, etc.) are safely escaped
-- Can set =<outline>= attributes via property drawers (Example: [[http://opml.davising.com/org-opml/attributes.org][Org]], [[http://opml.davising.com/org-opml/attributes.opml][OPML]])
+- Can set =<outline>= attributes via property drawers
 - Uses standard [[http://orgmode.org/org.html#Export-settings][export settings]] in the =<head>= element
 - Follows the OPML 2.0 [[http://dev.opml.org/spec2.html][specification]]
 
