@@ -34,7 +34,7 @@
     (template . org-opml-template))
   :options-alist '((:opml-link "OPML_LINK" nil nil t)
 		   (:opml-owner-id "OPML_OWNER_ID" nil (if (boundp 'opml-owner-id) opml-owner-id nil) t))
-  :menu-entry '(?o "Export to OPML"
+  :menu-entry '(?m "Export to OPML"
 		   (lambda (a s v b) (org-opml-export-to-opml a s v b)))
   :filters-alist '((:filter-final-output . org-opml-final-function)))
 
