@@ -2,7 +2,7 @@
 ;;
 ;; Change "~/src/org-opml/opml2org.py" to wherever that file is located.
 (add-to-list 'format-alist '(opml "Outline Processor Markup Language"
-                                  "<[?]xml version=\"1.0\"[?]>[\n]?.*[\n]?<opml version=\"2.0\">"
+                                  "<[?]xml version=\"1.0\"[^>]*[?]>[\n]?.*[\n]?.*[\n]?<opml version=\"[1|2].0\">"
                                   "~/src/org-opml/opml2org.py" opml-encode t))
 
 ;; If it ends with .opml, use `opml-encode' when saving.

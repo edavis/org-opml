@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 
 """
 opml2org.py -- convert OPML to Org mode
@@ -7,7 +7,16 @@ opml2org.py -- convert OPML to Org mode
 import sys
 import xml.etree.ElementTree as ET
 
-def process_body(element, headline_depth=1, list_depth=0):
+class opmlDataObject:
+
+    def __init__(self):
+        self.hasHeadlineAttributes = False
+        self.headlineDepth = 1
+        self.listDepth = 0
+
+def process_body(element, data=False):
+    if not data:
+        data = opmlDataObject()
     for outline in element:
         attrib = outline.attrib.copy()
         assert 'text' in attrib, 'missing text attribute'
@@ -15,7 +24,9 @@ def process_body(element, headline_depth=1, list_depth=0):
         if 'structure' in attrib:
             structure = attrib.pop('structure')
         else:
-            if attrib:
+            if attrib or (not data.hasHeadlineAttributes and not data.listDepth):
+                if attrib:
+                    data.hasHeadlineAttributes = True
                 structure = 'headline'
             elif len(outline):
                 structure = 'list'
@@ -23,20 +34,24 @@ def process_body(element, headline_depth=1, list_depth=0):
                 structure = 'paragraph'
 
         if structure == 'headline':
-            yield '%s %s' % ('*' * headline_depth, text)
+            yield '%s %s' % ('*' * data.headlineDepth, text)
             if attrib:
                 yield ':PROPERTIES:'
                 for k, v in attrib.iteritems():
                     yield ':%s: %s' % (k, v)
                 yield ':END:\n'
             if len(outline):
-                for child in process_body(outline, headline_depth + 1):
+                data.headlineDepth += 1
+                for child in process_body(outline, data):
                     yield child
+                data.headlineDepth += -1
         elif structure == 'list':
-            yield '%s- %s' % (' ' * list_depth, text)
+            yield '%s- %s' % (' ' * data.listDepth, text)
             if len(outline):
-                for child in process_body(outline, headline_depth, list_depth + 2):
+                data.listDepth += 2
+                for child in process_body(outline, data):
                     yield child
+                data.listDepth += -2
         elif structure == 'paragraph':
             yield '%s\n' % text
 
