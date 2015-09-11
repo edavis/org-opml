@@ -5,6 +5,10 @@
                                   "<[?]xml version=\"1.0\"[^>]*[?]>[\n]?.*[\n]?.*[\n]?<opml version=\"[1|2].0\">"
                                   "~/src/org-opml/opml2org.py" opml-encode t))
 
+(add-to-list 'format-alist '(opml "Outline Processor Markup Language"
+                                  "<opml version=[\"|\'][1|2].0[\"|\']>"
+                                  "~/src/org-opml/opml2org.py" opml-encode t))
+
 ;; If it ends with .opml, use `opml-encode' when saving.
 (defun set-buffer-file-format-to-opml ()
   "Set buffer-file-format to '(opml) when visiting an .opml file.
