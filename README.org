@@ -1,16 +1,10 @@
-* [UPDATE 2016-04-09] Looking for new project maintainer
+* NEW HOME
 
-If you're interested in taking over this project, please get in
-touch via issue #12 or via the email address in my profile.
+org-opml now lives at https://github.com/org-opml/org-opml
 
-I started this project as a way to teach myself the internals of org
-mode but I haven't used it in years. I don't even do much with OPML or
-org mode anymore.
+Thanks to @tonglianheng and @bsima for taking over.
 
-It really could use some polish and cleanups, especially getting it
-added to the package repositories available for Emacs and converting
-the Python script into native elisp. But it'll be your package if you
-adopt it to do whatever you want with it.
+Refs: https://github.com/edavis/org-opml/issues/12
 
 * org-opml
 
