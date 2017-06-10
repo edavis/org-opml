@@ -12,7 +12,7 @@
 This is needed as otherwise newly created .opml files wouldn't
 know to pass their contents through `opml-encode' because they
 don't yet contain the `format-alist' regexp pattern."
-  (when (string-match "\.opml$" (buffer-file-name))
+  (when (string-match "\\.opml$" (buffer-file-name))
     (setq buffer-file-format '(opml))))
 
 ;; Run the above function each time Emacs opens a file.
